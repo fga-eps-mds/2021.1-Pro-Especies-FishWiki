@@ -9,18 +9,18 @@ services:
     volumes:
       - ./src:/home/node/app/src
       - ./nodemon.json:/home/node/app/nodemon.json
-    container_name: proespecies-fishlog
+    container_name: proespecies-wiki
     expose:
-      - '4001'
+      - '4002'
     ports:
-      - '4001:4001'
+      - '4002:4002'
     command: npm run dev
   db:
-    container_name: mongoDBFishLog
+    container_name: mongoDBWiki
     image: mongo:latest
     restart: always
     volumes:
-      - ./fishData:/data/db
+      - ./wikiData:/data/db
     environment:
       - MONGO_INITDB_DATABASE=Fish
     ports:
