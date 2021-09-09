@@ -1,6 +1,6 @@
 import { Router } from 'express';
 // Rotas
-import fishWikiRoutes from './fishWikiRoutes';
+import fishWikiRoutes from './fishRoutes';
 
 const router = Router();
 
