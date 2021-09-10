@@ -10,7 +10,7 @@ export default class FishController {
       const { species } = await req.body;
       if (await FishWiki.findOne({ species })) {
         return res.status(409).json({
-          message: 'Essa espécie de peixe ja foi cadastrada',
+          message: 'Essa espécie de peixe já foi cadastrada',
         });
       }
       if (
@@ -35,7 +35,7 @@ export default class FishController {
         'fishId bigGroup group commonName species family feed habitat sizeMax weightMax endemic threatened piracema introduced trivia picture'
       );
 
-      if (!allFishWiki) {
+      if (!allFishWiki.length) {
         return res.status(404).json({
           message: 'Nenhum peixe cadastrado',
         });
