@@ -1,7 +1,6 @@
 import { Schema, model, Document } from 'mongoose';
 
 interface IFish extends Document {
-  fishId: number;
   bigGroup: string;
   group: string;
   commonName: string;
@@ -19,91 +18,83 @@ interface IFish extends Document {
   picture: string;
 }
 
-const fishSchema = new Schema<IFish>(
-  {
-    fishId: {
-      type: Schema.Types.ObjectId,
-      required: true,
-      trim: true,
-    },
-    grandeGrupo: {
-      type: String,
-      enum: ['escama', 'couro', 'arraia', 'outros', 'cascudo'],
-      required: false,
-      trim: true,
-    },
-    grupo: {
-      type: String,
-      required: false,
-      trim: true,
-    },
-    nomesComuns: {
-      type: String,
-      required: false,
-      trim: true,
-    },
-    nomeCientifico: {
-      type: String,
-      required: true,
-      unique: true,
-      trim: true,
-    },
-    familia: {
-      type: String,
-      required: false,
-      trim: true,
-    },
-    alimentacao: {
-      type: String,
-      default: false,
-      trim: true,
-    },
-    habitat: {
-      type: String,
-      required: false,
-      trim: true,
-    },
-    tamanhoMax: {
-      type: Number,
-      trim: true,
-    },
-    pesoMax: {
-      type: Number,
-      required: false,
-      trim: true,
-    },
-    endemica: {
-      type: String,
-      required: false,
-      trim: true,
-    },
-    ameacada: {
-      type: String,
-      required: false,
-      trim: true,
-    },
-    piracema: {
-      type: Boolean,
-      required: false,
-      trim: true,
-    },
-    introduzida: {
-      type: Boolean,
-      required: false,
-      trim: true,
-    },
-    curiosidades: {
-      type: String,
-      required: false,
-      trim: true,
-    },
-    foto: {
-      type: String,
-      required: false,
-      trim: true,
-    },
+const fishSchema = new Schema<IFish>({
+  bigGroup: {
+    type: String,
+    enum: ['escama', 'couro', 'arraia', 'outros', 'cascudo'],
+    required: false,
+    trim: true,
   },
-  { timestamps: { createdAt: 'created_at', updatedAt: 'updated_at' } }
-);
+  group: {
+    type: String,
+    required: false,
+    trim: true,
+  },
+  commonName: {
+    type: String,
+    required: false,
+    trim: true,
+  },
+  species: {
+    type: String,
+    required: true,
+    unique: true,
+    trim: true,
+  },
+  family: {
+    type: String,
+    required: false,
+    trim: true,
+  },
+  feed: {
+    type: String,
+    default: false,
+    trim: true,
+  },
+  habitat: {
+    type: String,
+    required: false,
+    trim: true,
+  },
+  sizeMax: {
+    type: Number,
+    trim: true,
+  },
+  weightMax: {
+    type: Number,
+    required: false,
+    trim: true,
+  },
+  endemic: {
+    type: String,
+    required: false,
+    trim: true,
+  },
+  threatened: {
+    type: String,
+    required: false,
+    trim: true,
+  },
+  piracema: {
+    type: Boolean,
+    required: false,
+    trim: true,
+  },
+  introduced: {
+    type: Boolean,
+    required: false,
+    trim: true,
+  },
+  trivia: {
+    type: String,
+    required: false,
+    trim: true,
+  },
+  picture: {
+    type: String,
+    required: false,
+    trim: true,
+  },
+});
 
 export default model<IFish>('FishWiki', fishSchema);
