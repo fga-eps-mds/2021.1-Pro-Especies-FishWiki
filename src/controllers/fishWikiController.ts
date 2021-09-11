@@ -7,15 +7,15 @@ export default class FishController {
       await FishWiki.create(req.body);
       return res.status(200).json(req.body);
     } catch (error) {
-      const { species } = await req.body;
-      if (await FishWiki.findOne({ species })) {
+      const { scientificName } = await req.body;
+      if (await FishWiki.findOne({ scientificName })) {
         return res.status(409).json({
           message: 'Essa espécie de peixe já foi cadastrada',
         });
       }
       if (
         !['escama', 'couro', 'arraia', 'outros', 'cascudo'].includes(
-          req.body.bigGroup
+          req.body.largeGroup
         )
       ) {
         return res.status(400).json({
@@ -32,7 +32,7 @@ export default class FishController {
     try {
       const allFishWiki = await FishWiki.find(
         {},
-        'fishId bigGroup group commonName species family feed habitat sizeMax weightMax endemic threatened piracema introduced trivia picture'
+        'fishId largeGroup group commonName scientificName family food habitat maxSize maxWeight isEndemic isThreatened hasSpawningSeason wasIntroduced funFact photo'
       );
 
       if (!allFishWiki.length) {
