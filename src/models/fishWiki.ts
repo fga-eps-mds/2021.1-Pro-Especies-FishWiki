@@ -1,25 +1,25 @@
 import { Schema, model, Document } from 'mongoose';
 
 interface IFish extends Document {
-  bigGroup: string;
+  largeGroup: string;
   group: string;
   commonName: string;
-  species: string;
+  scientificName: string;
   family: string;
-  feed: string;
+  food: string;
   habitat: string;
-  sizeMax: number;
-  weightMax: number;
-  endemic: string;
-  threatened: string;
-  piracema: boolean;
-  introduced: boolean;
-  trivia: string;
-  picture: string;
+  maxSize: number;
+  maxWeight: number;
+  isEndemic: string;
+  isThreatened: string;
+  hasSpawningSeason: string;
+  wasIntroduced: boolean;
+  funFact: string;
+  photo: string;
 }
 
 const fishSchema = new Schema<IFish>({
-  bigGroup: {
+  largeGroup: {
     type: String,
     enum: ['escama', 'couro', 'arraia', 'outros', 'cascudo'],
     required: false,
@@ -35,7 +35,7 @@ const fishSchema = new Schema<IFish>({
     required: false,
     trim: true,
   },
-  species: {
+  scientificName: {
     type: String,
     required: true,
     unique: true,
@@ -60,37 +60,37 @@ const fishSchema = new Schema<IFish>({
     type: Number,
     trim: true,
   },
-  weightMax: {
+  maxWeight: {
     type: Number,
     required: false,
     trim: true,
   },
-  endemic: {
+  isEndemic: {
     type: String,
     required: false,
     trim: true,
   },
-  threatened: {
+  isThreatened: {
     type: String,
     required: false,
     trim: true,
   },
-  piracema: {
+  hasSpawningSeason: {
+    type: String,
+    required: false,
+    trim: true,
+  },
+  wasIntroduced: {
     type: Boolean,
     required: false,
     trim: true,
   },
-  introduced: {
-    type: Boolean,
-    required: false,
-    trim: true,
-  },
-  trivia: {
+  funFact: {
     type: String,
     required: false,
     trim: true,
   },
-  picture: {
+  photo: {
     type: String,
     required: false,
     trim: true,

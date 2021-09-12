@@ -22,7 +22,7 @@ export default class FishController {
           message: 'Esse tipo de grande grupo não é válido',
         });
       }
-      return res.status(400).json({
+      return res.status(500).json({
         message: 'Falha no sistema ao cadastrar, tente novamente!',
       });
     }
@@ -32,7 +32,7 @@ export default class FishController {
     try {
       const allFishWiki = await FishWiki.find(
         {},
-        'fishId bigGroup group commonName species family feed habitat sizeMax weightMax endemic threatened piracema introduced trivia picture'
+        'largeGroup group commonName scientificName family food habitat maxSize maxWeight isEndemic isThreatened hasSpawningSeason wasIntroduced funFact photo'
       );
 
       if (!allFishWiki.length) {
