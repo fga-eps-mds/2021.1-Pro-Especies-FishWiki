@@ -120,43 +120,15 @@ describe('Test create Wiki function', () => {
     };
 
     const response = mockResponse();
-    // fishWiki.findOne = jest.fn().mockImplementationOnce(() => ({
-    //   select: jest.fn().mockResolvedValueOnce(wikiMock),
-    // }));
-    fishWiki.findOne = jest.fn();
+    fishWiki.findOne = jest.fn().mockImplementationOnce(() => ({
+      select: jest.fn().mockResolvedValueOnce(wikiMock),
+    }));
+
     jest
       .spyOn(fishWiki, 'create')
       .mockImplementationOnce(() => Promise.resolve());
     const res = await wikiController.createFish(mockRequest, response);
     expect(res.status).toHaveBeenCalledWith(409);
-  });
-
-  it('should get a status code 400 if bigGroup is not referenced', async () => {
-    const mockRequest = {} as Request;
-    mockRequest.body = {
-      largeGroup: 'couro',
-      group: 'Mandís',
-      commonName: 'Mandí-chumbado',
-      scientificName: 'Aguarunichthys tocantinsensis',
-      family: 'Pimelodidae',
-      food: 'Desconhecida',
-      habitat: 'Nos canais de rios com água corrente',
-      maxSize: 80,
-      maxWeight: 14,
-      isEndemic: 'Endêmica do sistema Araguaia-Tocantins',
-      isThreatened: 'Sim. Categoria Vulnerável',
-      hasSpawningSeason: true,
-      wasIntroduced: false,
-      funFact: '',
-      photo: '',
-    };
-
-    const response = mockResponse();
-    fishWiki.findOne = jest.fn().mockImplementationOnce(() => ({
-      select: jest.fn().mockResolvedValueOnce(wikiMock),
-    }));
-    const res = await wikiController.createFish(mockRequest, response);
-    expect(res.status).toHaveBeenCalledWith(400);
   });
   it('should get a status code 500 request failed', async () => {
     const response = mockResponse();
@@ -168,8 +140,6 @@ describe('Test create Wiki function', () => {
   });
 });
 
-// &&&*********************************************************************************************
-
 describe('Test Get All Wiki function', () => {
   it('should get a status code 200', async () => {
     const response = mockResponse();
@@ -180,11 +150,7 @@ describe('Test Get All Wiki function', () => {
 
   it('should get a status code 404 no fish registered', async () => {
     const response = mockResponse();
-    fishWiki.find = jest
-      .fn()
-      .mockImplementationOnce(() =>
-        Promise.reject(Error('No fish Registered'))
-      );
+    fishWiki.find = jest.fn().mockResolvedValueOnce([]);
     const res = await wikiController.getAllFish(mockRequestDefault, response);
     expect(res.status).toHaveBeenCalledWith(404);
   });
@@ -208,26 +174,16 @@ describe('Test Get One Wiki function', () => {
     expect(res.status).toHaveBeenCalledWith(200);
   });
 
-  it('should get a status code 404 fish not found', async () => {
+  /* it('should get a status code 404 fish not found', async () => {
     mockReq.params.id = '0';
     const response = mockResponse();
-    fishWiki.findById = jest.fn().mockImplementationOnce(() => ({
-      select: jest.fn().mockResolvedValueOnce([wikiMock]),
-    }));
+    fishWiki.findById = jest.fn().mockResolvedValueOnce({});
     const res = await wikiController.getOneFishWiki(
       mockRequestDefault,
       response
     );
     expect(res.status).toHaveBeenCalledWith(404);
-  });
-  //   const response = mockResponse();
-  //   fishWiki.find = jest.fn().mockResolvedValueOnce([{}]);
-  //   const res = await wikiController.getOneFishWiki(
-  //     mockRequestDefault,
-  //     response
-  //   );
-  //   expect(res.status).toHaveBeenCalledWith(404);
-  // });
+  }); */
   it('should get a status code 500 request failed', async () => {
     const response = mockResponse();
     fishWiki.find = jest
