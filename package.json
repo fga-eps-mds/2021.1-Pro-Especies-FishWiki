@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "jest",
+    "test": "jest --coverage",
     "start": "NODE_PATH=./build node build/index.js",
     "build": "tsc -p .",
     "dev": "nodemon src/index.ts",
@@ -21,6 +21,7 @@
   },
   "homepage": "https://github.com/fga-eps-mds/2021.1-Pro-Especies-Wiki#readme",
   "devDependencies": {
+    "@babel/preset-typescript": "^7.15.0",
     "@types/bcryptjs": "^2.4.2",
     "@types/express": "^4.17.13",
     "@types/jest": "^27.0.1",
