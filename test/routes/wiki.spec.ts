@@ -23,6 +23,7 @@ const wikiMock = {
 };
 
 const mockRequestDefault = {} as Request;
+
 mockRequestDefault.body = {
   largeGroup: 'couro',
   group: 'Mandís',
