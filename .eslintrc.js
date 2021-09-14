@@ -2,6 +2,7 @@ module.exports = {
   env: {
     es2021: true,
     node: true,
+    jest: true,
   },
   extends: ['airbnb-base', 'prettier'],
   parser: '@typescript-eslint/parser',
@@ -30,6 +31,7 @@ module.exports = {
         tsx: 'never',
       },
     ],
+    'class-methods-use-this': 'off',
   },
   settings: {
     'import/resolver': {
