@@ -1,4 +1,5 @@
 import { Request, Response } from 'express';
+// import { Dropbox } from 'dropbox';
 import FishWiki from '../models/fishWiki';
 
 export default class FishController {
@@ -56,4 +57,51 @@ export default class FishController {
       });
     }
   };
+
+  updateFishWiki = async () => {
+    // const dbx = new Dropbox({ accessToken: '...' });
+    // dbx
+    //   .filesDownload({ path: '/DataBase-APP-PESCA-1.xlsx' })
+    //   .then((response) => {
+    //     const blob = response.result.fileBlob;
+    //     const reader = new FileReader();
+    //     reader.addEventListener('loadend', () => {
+    //       console.log(reader.result); // will print out file content
+    //     });
+    //     reader.readAsText(blob);
+    //   })
+    //   .catch((error) => {
+    //     console.log(error);
+    //   });
+  };
+
+  // <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.8.0/jszip.js"></script>
+  // <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.8.0/xlsx.js"></script>
+  // ExcelToJSON = () => {
+  //   this.parseExcel = function (file) {
+  //     const reader = new FileReader();
+
+  //     reader.onload = function (e) {
+  //       const data = e.target.result;
+  //       const workbook = XLSX.read(data, {
+  //         type: 'binary',
+  //       });
+
+  //       workbook.SheetNames.forEach((sheetName) => {
+  //         // Here is your object
+  //         const XL_row_object = XLSX.utils.sheet_to_row_object_array(
+  //           workbook.Sheets[sheetName]
+  //         );
+  //         const json_object = JSON.stringify(XL_row_object);
+  //         console.log(json_object);
+  //       });
+  //     };
+
+  //     reader.onerror = function (ex) {
+  //       console.log(ex);
+  //     };
+
+  //     reader.readAsBinaryString(file);
+  //   };
+  // };
 }
