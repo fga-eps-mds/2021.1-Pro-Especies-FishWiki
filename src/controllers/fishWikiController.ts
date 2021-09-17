@@ -82,7 +82,6 @@ export default class FishController {
       if (typeof wasIntroduced !== 'undefined')
         query.wasIntroduced = wasIntroduced;
 
-      console.log(req.query);
       const filteredFishWiki = await FishWiki.find(query);
 
       if (!filteredFishWiki.length) {
