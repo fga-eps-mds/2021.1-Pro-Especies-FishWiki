@@ -83,14 +83,14 @@ export default class FishController {
         query.wasIntroduced = wasIntroduced;
 
       console.log(req.query);
-      const allFishWiki = await FishWiki.find(query);
+      const filteredFishWiki = await FishWiki.find(query);
 
-      if (!allFishWiki.length) {
+      if (!filteredFishWiki.length) {
         return res.status(404).json({
           message: 'Nenhum peixe cadastrado com essas características',
         });
       }
-      return res.status(200).json(allFishWiki);
+      return res.status(200).json(filteredFishWiki);
     } catch (error) {
       return res.status(500).json({
         message: 'Falha ao processar requisição',
