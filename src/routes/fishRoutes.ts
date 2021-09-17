@@ -13,11 +13,11 @@ fishWikiRoutes.get('/', (req: Request, res: Response) => {
   fishWikiController.getAllFish(req, res);
 });
 
-fishWikiRoutes.get('/:id', (req: Request, res: Response) => {
+fishWikiRoutes.get('/one/:id', (req: Request, res: Response) => {
   fishWikiController.getOneFishWiki(req, res);
 });
 
-fishWikiRoutes.get('/filter/:group', (req: Request, res: Response) => {
+fishWikiRoutes.get('/filter', (req: Request, res: Response) => {
   fishWikiController.filterFishWiki(req, res);
 });
 
