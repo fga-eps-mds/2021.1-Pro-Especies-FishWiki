@@ -17,4 +17,8 @@ fishWikiRoutes.get('/:id', (req: Request, res: Response) => {
   fishWikiController.getOneFishWiki(req, res);
 });
 
+fishWikiRoutes.get('/updateWiki', (req: Request, res: Response) => {
+  fishWikiController.updateFishWiki(req, res);
+});
+
 export default fishWikiRoutes;

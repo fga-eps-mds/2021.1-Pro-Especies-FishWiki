@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-// import { Dropbox } from 'dropbox';
+import { Dropbox } from 'dropbox';
 import FishWiki from '../models/fishWiki';
 
 export default class FishController {
@@ -58,23 +58,28 @@ export default class FishController {
     }
   };
 
-  updateFishWiki = async () => {
-    // const dbx = new Dropbox({ accessToken: '...' });
-    // dbx
-    //   .filesDownload({ path: '/DataBase-APP-PESCA-1.xlsx' })
-    //   .then((response) => {
-    //     const blob = response.result.fileBlob;
-    //     const reader = new FileReader();
-    //     reader.addEventListener('loadend', () => {
-    //       console.log(reader.result); // will print out file content
-    //     });
-    //     reader.readAsText(blob);
-    //   })
-    //   .catch((error) => {
-    //     console.log(error);
-    //   });
-  };
+  updateFishWiki = async (req: Request, res: Response) => {
+    try {
+      const dbx = new Dropbox({ accessToken: '...' });
+      let wikiFile = '';
 
+      dbx
+        .filesDownload({ path: '/DataBase-APP-PESCA-1.xlsx' })
+        .then((response: any) => {
+          wikiFile = response;
+          console.log(response);
+        })
+        .catch((error: any) => {
+          console.log(error);
+        });
+
+      return res.status(200).json(wikiFile);
+    } catch (error) {
+      return res.status(500).json({
+        message: 'Falha ao processar requisição',
+      });
+    }
+  };
   // <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.8.0/jszip.js"></script>
   // <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.8.0/xlsx.js"></script>
   // ExcelToJSON = () => {
