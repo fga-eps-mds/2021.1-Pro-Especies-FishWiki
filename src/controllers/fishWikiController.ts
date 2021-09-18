@@ -59,28 +59,11 @@ export default class FishController {
 
   filterFishWiki = async (req: Request, res: Response) => {
     try {
-      const {
-        largeGroup,
-        group,
-        family,
-        habitat,
-        maxSize,
-        maxWeight,
-        isEndemic,
-        isThreatened,
-        wasIntroduced,
-      } = req.query;
-      const query: any = {};
-      if (group) query.group = group;
-      if (largeGroup) query.largeGroup = largeGroup;
-      if (family) query.family = family;
-      if (habitat) query.habitat = habitat;
-      if (maxSize) query.maxSize = maxSize;
-      if (maxWeight) query.maxWeight = maxWeight;
-      if (isEndemic) query.isEndemic = isEndemic;
-      if (isThreatened) query.isThreatened = isThreatened;
-      if (typeof wasIntroduced !== 'undefined')
-        query.wasIntroduced = wasIntroduced;
+      const entries = Object.entries(req.query);
+      const nonEmptyOrNull = entries.filter(
+        ([key, val]) => val !== '' && val !== null
+      );
+      const query = Object.fromEntries(nonEmptyOrNull);
 
       const filteredFishWiki = await FishWiki.find(query);
 

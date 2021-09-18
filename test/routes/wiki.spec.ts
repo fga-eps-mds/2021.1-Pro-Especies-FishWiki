@@ -197,3 +197,36 @@ describe('Test Get One Wiki function', () => {
     expect(res.status).toHaveBeenCalledWith(500);
   });
 });
+
+describe('Test Filter Wiki function', () => {
+  // it('should get a status code 200', async () => {
+  //   const response = mockResponse();
+  //   fishWiki.find = jest.fn().mockImplementationOnce(() => ({
+  //     select: jest.fn().mockResolvedValueOnce([wikiMock]),
+  //   }));
+  //   const res = await wikiController.filterFishWiki(mockReq, response);
+  //   console.log(res);
+  //   expect(res.status).toHaveBeenCalledWith(200);
+  // });
+
+  // it('should get a status code 404 no fish registered', async () => {
+  //   const response = mockResponse();
+  //   fishWiki.find = jest.fn().mockResolvedValueOnce([]);
+  //   const res = await wikiController.filterFishWiki(
+  //     mockRequestDefault,
+  //     response
+  //   );
+  //   expect(res.status).toHaveBeenCalledWith(404);
+  // });
+  it('should get a status code 500 request failed', async () => {
+    const response = mockResponse();
+    fishWiki.find = jest
+      .fn()
+      .mockImplementationOnce(() => Promise.reject(Error('Request Failure')));
+    const res = await wikiController.filterFishWiki(
+      mockRequestDefault,
+      response
+    );
+    expect(res.status).toHaveBeenCalledWith(500);
+  });
+});
