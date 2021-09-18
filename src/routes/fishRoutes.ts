@@ -17,8 +17,4 @@ fishWikiRoutes.get('/one/:id', (req: Request, res: Response) => {
   fishWikiController.getOneFishWiki(req, res);
 });
 
-fishWikiRoutes.get('/filter', (req: Request, res: Response) => {
-  fishWikiController.filterFishWiki(req, res);
-});
-
 export default fishWikiRoutes;

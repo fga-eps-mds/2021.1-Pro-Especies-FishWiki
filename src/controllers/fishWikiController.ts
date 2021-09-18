@@ -21,16 +21,17 @@ export default class FishController {
 
   getAllFish = async (req: Request, res: Response) => {
     try {
+      const entries = Object.entries(req.query);
+      const nonEmptyOrNull = entries.filter(
+        ([, val]) => val !== '' && val !== null
+      );
+      const query = Object.fromEntries(nonEmptyOrNull);
+
       const allFishWiki = await FishWiki.find(
-        {},
+        query,
         'largeGroup group commonName scientificName family food habitat maxSize maxWeight isEndemic isThreatened hasSpawningSeason wasIntroduced funFact photo'
       );
 
-      if (!allFishWiki.length) {
-        return res.status(404).json({
-          message: 'Nenhum peixe cadastrado',
-        });
-      }
       return res.status(200).json(allFishWiki);
     } catch (error) {
       return res.status(500).json({
@@ -50,29 +51,6 @@ export default class FishController {
         });
       }
       return res.status(200).json(fishWiki);
-    } catch (error) {
-      return res.status(500).json({
-        message: 'Falha ao processar requisição',
-      });
-    }
-  };
-
-  filterFishWiki = async (req: Request, res: Response) => {
-    try {
-      const entries = Object.entries(req.query);
-      const nonEmptyOrNull = entries.filter(
-        ([key, val]) => val !== '' && val !== null
-      );
-      const query = Object.fromEntries(nonEmptyOrNull);
-
-      const filteredFishWiki = await FishWiki.find(query);
-
-      if (!filteredFishWiki.length) {
-        return res.status(404).json({
-          message: 'Nenhum peixe cadastrado com essas características',
-        });
-      }
-      return res.status(200).json(filteredFishWiki);
     } catch (error) {
       return res.status(500).json({
         message: 'Falha ao processar requisição',
