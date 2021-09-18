@@ -2,7 +2,7 @@ import { Request, Response } from 'express';
 import { Dropbox } from 'dropbox';
 import FishWiki from '../models/fishWiki';
 
-// const excelToJson = require('convert-excel-to-json');
+const excelToJson = require('convert-excel-to-json');
 const fs = require('fs');
 const path = require('path');
 
@@ -92,8 +92,14 @@ export default class FishController {
           console.log(error);
         });
 
+      const result = excelToJson({
+        sourceFile: './planilha-dados.xlsx',
+      });
+      console.log(result);
+
       return res.status(200).json(wikiFile);
     } catch (error) {
+      console.log(error);
       return res.status(500).json({
         message: 'Falha ao processar requisição',
       });
