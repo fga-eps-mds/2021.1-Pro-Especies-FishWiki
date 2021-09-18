@@ -2,6 +2,10 @@ import { Request, Response } from 'express';
 import { Dropbox } from 'dropbox';
 import FishWiki from '../models/fishWiki';
 
+// const excelToJson = require('convert-excel-to-json');
+const fs = require('fs');
+const path = require('path');
+
 export default class FishController {
   createFish = async (req: Request, res: Response) => {
     try {
@@ -60,14 +64,29 @@ export default class FishController {
 
   updateFishWiki = async (req: Request, res: Response) => {
     try {
-      const dbx = new Dropbox({ accessToken: '...' });
-      let wikiFile = '';
+      const wikiFile = {};
+
+      const dbx = new Dropbox({
+        accessToken: '...',
+      });
 
       dbx
         .filesDownload({ path: '/DataBase-APP-PESCA-1.xlsx' })
         .then((response: any) => {
-          wikiFile = response;
           console.log(response);
+
+          const filepath = path.join(__dirname, 'planilha-dados.xlsx');
+          fs.writeFile(
+            filepath,
+            response.result.fileBinary,
+            'binary',
+            (err: any) => {
+              if (err) {
+                throw err;
+              }
+              console.log(`Dropbox File '${response.result.name}' saved`);
+            }
+          );
         })
         .catch((error: any) => {
           console.log(error);
