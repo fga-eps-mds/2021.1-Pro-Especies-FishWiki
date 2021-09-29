@@ -13,7 +13,7 @@ interface IFish extends Document {
   isEndemic: string;
   isThreatened: string;
   hasSpawningSeason: string;
-  wasIntroduced: boolean;
+  wasIntroduced: string;
   funFact: string;
   photo: string;
 }
@@ -81,7 +81,7 @@ const fishSchema = new Schema<IFish>({
     trim: true,
   },
   wasIntroduced: {
-    type: Boolean,
+    type: String,
     required: false,
     trim: true,
   },

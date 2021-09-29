@@ -64,10 +64,11 @@ export default class FishController {
 
   updateFishWiki = async (req: Request, res: Response) => {
     try {
-      const wikiFile = {};
+      // const wikiFile = {};
 
       const dbx = new Dropbox({
-        accessToken: '...',
+        accessToken:
+          '...',
       });
 
       dbx
@@ -93,11 +94,33 @@ export default class FishController {
         });
 
       const result = excelToJson({
-        sourceFile: './planilha-dados.xlsx',
+        sourceFile: 'src/controllers/planilha-dados.xlsx',
+        header: {
+          rows: 1,
+        },
+        columnToKey: {
+          A: 'largeGroup',
+          B: 'group',
+          C: 'commonName',
+          D: 'scientificName',
+          E: 'family',
+          F: 'food',
+          G: 'habitat',
+          H: 'maxSize',
+          I: 'maxWeight',
+          J: 'isEndemic',
+          K: 'isThreatened',
+          L: 'hasSpawningSeason',
+          M: 'wasIntroduced',
+          N: 'funFact',
+          O: 'photo',
+        },
       });
-      console.log(result);
-
-      return res.status(200).json(wikiFile);
+      // console.log(result.Plan1);
+      // result.Plan1.forEach(async (element: object) => {
+      //   const findFish = await FishWiki.find({element.scientificName});
+      // });
+      return res.status(200).json(result);
     } catch (error) {
       console.log(error);
       return res.status(500).json({
