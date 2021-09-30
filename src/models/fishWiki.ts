@@ -21,7 +21,6 @@ interface IFish extends Document {
 const fishSchema = new Schema<IFish>({
   largeGroup: {
     type: String,
-    enum: ['escama', 'couro', 'arraia', 'outros', 'cascudo'],
     required: false,
     trim: true,
   },

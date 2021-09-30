@@ -6,6 +6,30 @@ const excelToJson = require('convert-excel-to-json');
 const fs = require('fs');
 const path = require('path');
 
+interface IProperty {
+  largeGroup: string;
+  group: string;
+  commonName: string;
+  scientificName: string;
+  family: string;
+  food: string;
+  habitat: string;
+  maxSize: number;
+  maxWeight: number;
+  isEndemic: string;
+  isThreatened: string;
+  hasSpawningSeason: string;
+  wasIntroduced: string;
+  funFact: string;
+  photo: string;
+}
+
+interface ISheet {
+  Plan1: IProperty[];
+  Plan2: object[];
+  Plan3: object[];
+}
+
 export default class FishController {
   createFish = async (req: Request, res: Response) => {
     try {
@@ -28,7 +52,7 @@ export default class FishController {
     try {
       const allFishWiki = await FishWiki.find(
         {},
-        'largeGroup group commonName scientificName family food habitat maxSize maxWeight isEndemic isThreatened hasSpawningSeason wasIntroduced funFact photo'
+        'largeGroup group commonName scientificName family food habitat sizeMax maxWeight isEndemic isThreatened hasSpawningSeason wasIntroduced funFact photo'
       );
 
       if (!allFishWiki.length) {
@@ -67,15 +91,12 @@ export default class FishController {
       // const wikiFile = {};
 
       const dbx = new Dropbox({
-        accessToken:
-          '...',
+        accessToken: '...',
       });
 
       dbx
         .filesDownload({ path: '/DataBase-APP-PESCA-1.xlsx' })
         .then((response: any) => {
-          console.log(response);
-
           const filepath = path.join(__dirname, 'planilha-dados.xlsx');
           fs.writeFile(
             filepath,
@@ -85,7 +106,6 @@ export default class FishController {
               if (err) {
                 throw err;
               }
-              console.log(`Dropbox File '${response.result.name}' saved`);
             }
           );
         })
@@ -93,7 +113,7 @@ export default class FishController {
           console.log(error);
         });
 
-      const result = excelToJson({
+      const result: ISheet = excelToJson({
         sourceFile: 'src/controllers/planilha-dados.xlsx',
         header: {
           rows: 1,
@@ -106,7 +126,7 @@ export default class FishController {
           E: 'family',
           F: 'food',
           G: 'habitat',
-          H: 'maxSize',
+          H: 'sizeMax',
           I: 'maxWeight',
           J: 'isEndemic',
           K: 'isThreatened',
@@ -116,10 +136,21 @@ export default class FishController {
           O: 'photo',
         },
       });
-      // console.log(result.Plan1);
-      // result.Plan1.forEach(async (element: object) => {
-      //   const findFish = await FishWiki.find({element.scientificName});
-      // });
+      result.Plan1.forEach(async (element: IProperty) => {
+        const findFish = await FishWiki.findOne({
+          scientificName: element.scientificName,
+        });
+        if (!findFish) {
+          await FishWiki.create(element);
+        } else {
+          await FishWiki.findOneAndUpdate(
+            {
+              scientificName: element.scientificName,
+            },
+            element
+          );
+        }
+      });
       return res.status(200).json(result);
     } catch (error) {
       console.log(error);
@@ -128,33 +159,4 @@ export default class FishController {
       });
     }
   };
-  // <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.8.0/jszip.js"></script>
-  // <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.8.0/xlsx.js"></script>
-  // ExcelToJSON = () => {
-  //   this.parseExcel = function (file) {
-  //     const reader = new FileReader();
-
-  //     reader.onload = function (e) {
-  //       const data = e.target.result;
-  //       const workbook = XLSX.read(data, {
-  //         type: 'binary',
-  //       });
-
-  //       workbook.SheetNames.forEach((sheetName) => {
-  //         // Here is your object
-  //         const XL_row_object = XLSX.utils.sheet_to_row_object_array(
-  //           workbook.Sheets[sheetName]
-  //         );
-  //         const json_object = JSON.stringify(XL_row_object);
-  //         console.log(json_object);
-  //       });
-  //     };
-
-  //     reader.onerror = function (ex) {
-  //       console.log(ex);
-  //     };
-
-  //     reader.readAsBinaryString(file);
-  //   };
-  // };
 }
