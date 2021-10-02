@@ -88,12 +88,9 @@ export default class FishController {
 
   updateFishWiki = async (req: Request, res: Response) => {
     try {
-      // const wikiFile = {};
-
       const dbx = new Dropbox({
-        accessToken: '...',
+        accessToken: process.env.DROPBOX_TOKEN,
       });
-
       dbx
         .filesDownload({ path: '/DataBase-APP-PESCA-1.xlsx' })
         .then((response: any) => {
@@ -133,7 +130,7 @@ export default class FishController {
           L: 'hasSpawningSeason',
           M: 'wasIntroduced',
           N: 'funFact',
-          O: 'photo',
+          O: 'HasPhoto',
         },
       });
       result.Plan1.forEach(async (element: IProperty) => {

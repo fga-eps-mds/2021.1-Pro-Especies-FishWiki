@@ -16,8 +16,8 @@ const wikiMock = {
   maxWeight: 14,
   isEndemic: 'Endêmica do sistema Araguaia-Tocantins',
   isThreatened: 'Sim. Categoria Vulnerável',
-  hasSpawningSeason: true,
-  wasIntroduced: false,
+  hasSpawningSeason: 'Sim',
+  wasIntroduced: 'Não',
   funFact: '',
   photo: '',
 };
@@ -195,5 +195,23 @@ describe('Test Get One Wiki function', () => {
       response
     );
     expect(res.status).toHaveBeenCalledWith(500);
+  });
+});
+
+describe('Test Update Wiki function', () => {
+  beforeEach(() => {
+    process.env = {
+      DROPBOX_TOKEN:
+        'sl.A5ny4o2p68_ZbVdeMKVlCQ-1Y2yjLRsGaud4JUopa3Sk_3ab-C6k9ls6rNHMlOkZfA4ITkeSVx15DR30tEbnDEhSr_g-MFLp2NdAeg1cfbKoMQMqVQ9bfq22sc-0i109e3r11RlVIL66',
+    };
+  });
+  it('should get a status code 200 and create fishwiki itens', async () => {
+    const response = mockResponse();
+    fishWiki.findOne = jest.fn();
+    jest
+      .spyOn(fishWiki, 'create')
+      .mockImplementationOnce(() => Promise.resolve());
+    const res = await wikiController.updateFishWiki(mockReq, response);
+    expect(res.status).toHaveBeenCalledWith(200);
   });
 });
