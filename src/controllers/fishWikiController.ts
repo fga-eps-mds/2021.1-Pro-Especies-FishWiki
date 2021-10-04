@@ -1,10 +1,10 @@
 import { Request, Response } from 'express';
-import { Dropbox } from 'dropbox';
 import FishWiki from '../models/fishWiki';
 
 const excelToJson = require('convert-excel-to-json');
 const fs = require('fs');
 const path = require('path');
+const getSheet = require('../services/dropbox/getSheet');
 
 interface IProperty {
   largeGroup: string;
@@ -87,51 +87,38 @@ export default class FishController {
   };
 
   updateFishWiki = async (req: Request, res: Response) => {
+    const columnToKey = {
+      A: 'largeGroup',
+      B: 'group',
+      C: 'commonName',
+      D: 'scientificName',
+      E: 'family',
+      F: 'food',
+      G: 'habitat',
+      H: 'sizeMax',
+      I: 'maxWeight',
+      J: 'isEndemic',
+      K: 'isThreatened',
+      L: 'hasSpawningSeason',
+      M: 'wasIntroduced',
+      N: 'funFact',
+      O: 'HasPhoto',
+    };
     try {
-      const dbx = new Dropbox({
-        accessToken: process.env.DROPBOX_TOKEN,
+      const sheet: any = await getSheet('/DataBase-APP-PESCA-1.xlsx');
+      const filepath = path.join(__dirname, 'planilha-dados.xlsx');
+      fs.writeFile(filepath, sheet.result.fileBinary, 'binary', (err: any) => {
+        if (err) {
+          throw err;
+        }
       });
-      dbx
-        .filesDownload({ path: '/DataBase-APP-PESCA-1.xlsx' })
-        .then((response: any) => {
-          const filepath = path.join(__dirname, 'planilha-dados.xlsx');
-          fs.writeFile(
-            filepath,
-            response.result.fileBinary,
-            'binary',
-            (err: any) => {
-              if (err) {
-                throw err;
-              }
-            }
-          );
-        })
-        .catch((error: any) => {
-          console.log(error);
-        });
 
       const result: ISheet = excelToJson({
         sourceFile: 'src/controllers/planilha-dados.xlsx',
         header: {
           rows: 1,
         },
-        columnToKey: {
-          A: 'largeGroup',
-          B: 'group',
-          C: 'commonName',
-          D: 'scientificName',
-          E: 'family',
-          F: 'food',
-          G: 'habitat',
-          H: 'sizeMax',
-          I: 'maxWeight',
-          J: 'isEndemic',
-          K: 'isThreatened',
-          L: 'hasSpawningSeason',
-          M: 'wasIntroduced',
-          N: 'funFact',
-          O: 'HasPhoto',
-        },
+        columnToKey,
       });
       result.Plan1.forEach(async (element: IProperty) => {
         const findFish = await FishWiki.findOne({
