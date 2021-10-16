@@ -1,4 +1,5 @@
 import mongoose from 'mongoose';
+import fishLogSeed from '../utils/seed/fishLogSeed';
 
 const databaseConnect = async () => {
   try {
@@ -20,6 +21,7 @@ const databaseConnect = async () => {
         }
       }
     );
+    await fishLogSeed();
   } catch (error) {
     console.log('Não foi possível inicicializar corretamente a base de dados!');
     console.log(error);
