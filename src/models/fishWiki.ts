@@ -1,6 +1,6 @@
 import { Schema, model, Document } from 'mongoose';
 
-interface IFish extends Document {
+export interface IFish extends Document {
   largeGroup: string;
   group: string;
   commonName: string;
@@ -21,7 +21,6 @@ interface IFish extends Document {
 const fishSchema = new Schema<IFish>({
   largeGroup: {
     type: String,
-    enum: ['escama', 'couro', 'arraia', 'outros', 'cascudo'],
     required: false,
     trim: true,
   },
