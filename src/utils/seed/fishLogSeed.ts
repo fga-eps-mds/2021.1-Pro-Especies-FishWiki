@@ -12,10 +12,14 @@ interface IFish {
   habitat: string;
   maxSize: number;
   maxWeight: number;
-  isEndemic: string;
-  isThreatened: string;
-  hasSpawningSeason: string;
-  wasIntroduced: string;
+  isEndemicInfo: string;
+  isEndemic: boolean;
+  isThreatenedInfo: string;
+  isThreatened: boolean;
+  hasSpawningSeasonInfo: string;
+  hasSpawningSeason: boolean;
+  wasIntroducedInfo: string;
+  wasIntroduced: boolean;
   funFact: string;
   photo: string;
 }
@@ -36,12 +40,16 @@ const fishLogSeed = async () => {
     G: 'habitat',
     H: 'sizeMax',
     I: 'maxWeight',
-    J: 'isEndemic',
-    K: 'isThreatened',
-    L: 'hasSpawningSeason',
-    M: 'wasIntroduced',
-    N: 'funFact',
-    O: 'HasPhoto',
+    J: 'isEndemicInfo',
+    K: 'isEndemic',
+    L: 'isThreatenedInfo',
+    M: 'isThreatened',
+    N: 'hasSpawningSeasonInfo',
+    O: 'hasSpawningSeason',
+    P: 'wasIntroducedInfo',
+    Q: 'wasIntroduced',
+    R: 'funFact',
+    S: 'photo',
   };
   try {
     const fishWiki = await FishWiki.find();
@@ -56,10 +64,6 @@ const fishLogSeed = async () => {
       columnToKey,
     });
     for (let i = 0; i < result.Plan2.length; i += 1) {
-      const value = result.Plan2[i].wasIntroduced;
-      if (value === undefined) {
-        result.Plan2[i].wasIntroduced = '-';
-      }
       const fish = {
         largeGroup: result.Plan2[i].largeGroup,
         group: result.Plan2[i].group,
@@ -70,12 +74,26 @@ const fishLogSeed = async () => {
         habitat: result.Plan2[i].habitat,
         maxSize: result.Plan2[i].maxSize,
         maxWeight: result.Plan2[i].maxWeight,
-        isEndemic: result.Plan2[i].isEndemic,
-        isThreatened: result.Plan2[i].isThreatened,
-        hasSpawningSeason: result.Plan2[i].hasSpawningSeason,
-        wasIntroduced: !!result.Plan2[i].wasIntroduced
-          .toLowerCase()
-          .includes('sim'),
+        isEndemicInfo: result.Plan2[i].isEndemicInfo,
+        isEndemic: !!(
+          result.Plan2[i].isEndemicInfo !== undefined &&
+          result.Plan2[i].isEndemicInfo.toLowerCase().includes('sim')
+        ),
+        isThreatenedInfo: result.Plan2[i].isThreatenedInfo,
+        isThreatened: !!(
+          result.Plan2[i].isThreatenedInfo !== undefined &&
+          result.Plan2[i].isThreatenedInfo.toLowerCase().includes('sim')
+        ),
+        hasSpawningSeasonInfo: result.Plan2[i].hasSpawningSeasonInfo,
+        hasSpawningSeason: !!(
+          result.Plan2[i].hasSpawningSeasonInfo !== undefined &&
+          result.Plan2[i].hasSpawningSeasonInfo.toLowerCase().includes('sim')
+        ),
+        wasIntroducedInfo: result.Plan2[i].wasIntroducedInfo,
+        wasIntroduced: !!(
+          result.Plan2[i].wasIntroducedInfo !== undefined &&
+          result.Plan2[i].wasIntroducedInfo.toLowerCase().includes('sim')
+        ),
         funFact: result.Plan2[i].funFact,
         photo: result.Plan2[i].photo,
       };

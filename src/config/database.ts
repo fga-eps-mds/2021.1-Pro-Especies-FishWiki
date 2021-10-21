@@ -4,7 +4,7 @@ import fishLogSeed from '../utils/seed/fishLogSeed';
 const databaseConnect = async () => {
   try {
     await mongoose.connect(
-      'mongodb://db/wiki',
+      process.env.MONGODB_URI || 'mongodb://db/wiki',
       {
         useNewUrlParser: true,
         useUnifiedTopology: true,

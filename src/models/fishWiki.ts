@@ -10,9 +10,13 @@ export interface IFish extends Document {
   habitat: string;
   maxSize: number;
   maxWeight: number;
-  isEndemic: string;
-  isThreatened: string;
-  hasSpawningSeason: string;
+  isEndemicInfo: string;
+  isEndemic: boolean;
+  isThreatenedInfo: string;
+  isThreatened: boolean;
+  hasSpawningSeasonInfo: string;
+  hasSpawningSeason: boolean;
+  wasIntroducedInfo: string;
   wasIntroduced: boolean;
   funFact: string;
   photo: string;
@@ -64,22 +68,42 @@ const fishSchema = new Schema<IFish>({
     required: false,
     trim: true,
   },
+  isEndemicInfo: {
+    type: String,
+    required: false,
+    trim: true,
+  },
   isEndemic: {
+    type: Boolean,
+    required: false,
+    trim: true,
+  },
+  isThreatenedInfo: {
     type: String,
     required: false,
     trim: true,
   },
   isThreatened: {
-    type: String,
+    type: Boolean,
     required: false,
     trim: true,
   },
-  hasSpawningSeason: {
+  wasIntroducedInfo: {
     type: String,
     required: false,
     trim: true,
   },
   wasIntroduced: {
+    type: Boolean,
+    required: false,
+    trim: true,
+  },
+  hasSpawningSeasonInfo: {
+    type: String,
+    required: false,
+    trim: true,
+  },
+  hasSpawningSeason: {
     type: Boolean,
     required: false,
     trim: true,
