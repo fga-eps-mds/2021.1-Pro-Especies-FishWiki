@@ -56,6 +56,10 @@ const fishLogSeed = async () => {
       columnToKey,
     });
     for (let i = 0; i < result.Plan2.length; i += 1) {
+      const value = result.Plan2[i].wasIntroduced;
+      if (value === undefined) {
+        result.Plan2[i].wasIntroduced = '-';
+      }
       const fish = {
         largeGroup: result.Plan2[i].largeGroup,
         group: result.Plan2[i].group,
