@@ -1,6 +1,6 @@
 import { Schema, model, Document } from 'mongoose';
 
-interface IFish extends Document {
+export interface IFish extends Document {
   largeGroup: string;
   group: string;
   commonName: string;
