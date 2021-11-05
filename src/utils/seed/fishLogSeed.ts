@@ -80,7 +80,7 @@ const fishLogSeed = async () => {
       return;
     }
     const result: ISheet = await excelToJson({
-      sourceFile: 'src/utils/seed/planilha-dados3.xlsx',
+      sourceFile: 'src/utils/seed/planilha-dados.xlsx',
       header: {
         rows: 1,
       },
