@@ -87,10 +87,6 @@ const fishLogSeed = async () => {
       columnToKey,
     });
     for (let i = 0; i < result.Plan2.length; i += 1) {
-      // console.log('####################################');
-      // console.log(getFishPhoto(result.Plan2[i].photo));
-      // console.log('####################################');
-
       const fish = {
         largeGroup: result.Plan2[i].largeGroup,
         group: result.Plan2[i].group,
@@ -122,7 +118,7 @@ const fishLogSeed = async () => {
           result.Plan2[i].wasIntroducedInfo.toLowerCase().includes('sim')
         ),
         funFact: result.Plan2[i].funFact,
-        photo: getFishPhoto(result.Plan2[i].photo),
+        photo: result.Plan2[i].photo,
       };
       // eslint-disable-next-line no-await-in-loop
       await FishWiki.create(fish);
