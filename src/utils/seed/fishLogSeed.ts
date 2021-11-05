@@ -1,6 +1,8 @@
+import got from 'got';
 import FishWiki from '../../models/fishWiki';
 
 const excelToJson = require('convert-excel-to-json');
+// const request = require('request');
 
 interface IFish {
   largeGroup: string;
@@ -28,6 +30,27 @@ interface ISheet {
   Plan2: IFish[];
   Plan3: object[];
 }
+
+const getFishPhoto = (url: string) => {
+  if (url === undefined) {
+    return;
+  }
+
+  try {
+    got(url, {
+      encoding: 'base64',
+    })
+      .then((response) => {
+        const contentType = response.headers['content-type'];
+        const imgData = response.body;
+        const encodedImage = `data:${contentType};base64,${imgData}`;
+        return encodedImage;
+      })
+      .then();
+  } catch (error) {
+    console.log('Deu ruim');
+  }
+};
 
 const fishLogSeed = async () => {
   const columnToKey = {
@@ -64,6 +87,10 @@ const fishLogSeed = async () => {
       columnToKey,
     });
     for (let i = 0; i < result.Plan2.length; i += 1) {
+      // console.log('####################################');
+      // console.log(getFishPhoto(result.Plan2[i].photo));
+      // console.log('####################################');
+
       const fish = {
         largeGroup: result.Plan2[i].largeGroup,
         group: result.Plan2[i].group,
@@ -95,7 +122,7 @@ const fishLogSeed = async () => {
           result.Plan2[i].wasIntroducedInfo.toLowerCase().includes('sim')
         ),
         funFact: result.Plan2[i].funFact,
-        photo: result.Plan2[i].photo,
+        photo: getFishPhoto(result.Plan2[i].photo),
       };
       // eslint-disable-next-line no-await-in-loop
       await FishWiki.create(fish);
