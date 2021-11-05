@@ -80,7 +80,7 @@ const fishLogSeed = async () => {
       return;
     }
     const result: ISheet = await excelToJson({
-      sourceFile: 'src/utils/seed/planilha-dados3.xlsx',
+      sourceFile: 'src/utils/seed/planilha-dados.xlsx',
       header: {
         rows: 1,
       },
@@ -122,7 +122,7 @@ const fishLogSeed = async () => {
           result.Plan2[i].wasIntroducedInfo.toLowerCase().includes('sim')
         ),
         funFact: result.Plan2[i].funFact,
-        photo: getFishPhoto(result.Plan2[i].photo),
+        photo: result.Plan2[i].photo,
       };
       // eslint-disable-next-line no-await-in-loop
       await FishWiki.create(fish);
