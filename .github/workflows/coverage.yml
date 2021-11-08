@@ -28,6 +28,9 @@ jobs:
     - name: Run the tests
       run: npm test -- --coverage
     
+    - name: Show file
+      run: cat coverage/test-report.xml
+
     - name: SonarCloud Scan
       uses: SonarSource/sonarcloud-github-action@v1.4
       env:
