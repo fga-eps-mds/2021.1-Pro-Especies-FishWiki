@@ -1,9 +1,10 @@
 import mongoose from 'mongoose';
+import fishLogSeed from '../utils/seed/fishLogSeed';
 
 const databaseConnect = async () => {
   try {
     await mongoose.connect(
-      'mongodb://db/wiki',
+      process.env.MONGODB_URI || 'mongodb://db/wiki',
       {
         useNewUrlParser: true,
         useUnifiedTopology: true,
@@ -20,6 +21,7 @@ const databaseConnect = async () => {
         }
       }
     );
+    await fishLogSeed();
   } catch (error) {
     console.log('Não foi possível inicicializar corretamente a base de dados!');
     console.log(error);

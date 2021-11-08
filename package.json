@@ -5,7 +5,7 @@
   "main": "server.js",
   "scripts": {
     "test": "jest --coverage",
-    "start": "NODE_PATH=./build node build/server.js",
+    "start": "NODE_PATH=./build node build/src/server.js",
     "build": "tsc -p .",
     "dev": "nodemon src/server.ts",
     "lint": "eslint \"**/*.{ts,tsx}\""
@@ -43,11 +43,15 @@
   "dependencies": {
     "@types/jsonwebtoken": "^8.5.5",
     "bcryptjs": "^2.4.3",
+    "convert-excel-to-json": "^1.7.0",
     "dotenv": "^10.0.0",
     "express": "^4.17.1",
+    "got": "^11.8.2",
+    "jest-sonar": "^0.2.12",
     "jsonwebtoken": "^8.5.1",
     "mongodb": "^4.1.0",
     "mongoose": "^5.13.8",
+    "request": "^2.88.2",
     "supertest": "^6.1.6"
   }
 }
