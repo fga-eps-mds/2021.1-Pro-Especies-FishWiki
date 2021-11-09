@@ -49,9 +49,8 @@ const fishSchema = new Schema<IFish>({
     required: false,
     trim: true,
   },
-  feed: {
+  food: {
     type: String,
-    default: false,
     trim: true,
   },
   habitat: {
@@ -59,7 +58,7 @@ const fishSchema = new Schema<IFish>({
     required: false,
     trim: true,
   },
-  sizeMax: {
+  maxSize: {
     type: Number,
     trim: true,
   },

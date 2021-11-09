@@ -39,17 +39,13 @@ const fishLogSeed = async () => {
     E: 'family',
     F: 'food',
     G: 'habitat',
-    H: 'sizeMax',
+    H: 'maxSize',
     I: 'maxWeight',
     J: 'isEndemicInfo',
-    K: 'isEndemic',
-    L: 'isThreatenedInfo',
-    M: 'isThreatened',
-    N: 'hasSpawningSeasonInfo',
-    O: 'hasSpawningSeason',
-    P: 'wasIntroducedInfo',
-    Q: 'wasIntroduced',
-    R: 'funFact',
+    K: 'isThreatenedInfo',
+    L: 'hasSpawningSeasonInfo',
+    M: 'wasIntroducedInfo',
+    N: 'funFact',
     S: 'photo',
   };
   try {
@@ -58,7 +54,7 @@ const fishLogSeed = async () => {
       return;
     }
     const result: ISheet = await excelToJson({
-      sourceFile: 'src/utils/seed/planilha-dados.xlsx',
+      sourceFile: 'src/utils/seed/planilha-dados1.xlsx',
       header: {
         rows: 1,
       },
